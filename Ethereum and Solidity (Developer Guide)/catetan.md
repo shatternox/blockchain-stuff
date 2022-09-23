@@ -107,7 +107,7 @@ contract Inbox {
 
 npm init
 
-npm install solc@0.4.17
+npm install solc@0.4.17 // npm i solc kalo gk bisa
 
 node .\compile.js
 

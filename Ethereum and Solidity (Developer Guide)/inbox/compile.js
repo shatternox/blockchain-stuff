@@ -14,8 +14,7 @@ const source = fs.readFileSync(inboxPath, 'utf8')
 // node compile.js
 // console.log(solc.compile(source, 1)); >> INI PENTING BUAT ISINYA, KITA AMBIL BAGIAN .contracts[':Inbox'] AJA KARENA ITU YG PENTING
 // interface: >> Itu ABI nya
-
-module.exports = solc.compile(source, 1).contracts[':Inbox'];
+module.exports = solc.compile(source, 1).contracts[":Inbox"];
 
 
 
