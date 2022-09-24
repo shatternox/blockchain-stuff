@@ -113,9 +113,13 @@ node .\compile.js
 
 npm install mocha ganache-cli web3
 
+npm install @truffle/hdwallet-provider
 
 
-CO
+
+npm run test >> For testing 
+
+node deploy.js >> For deploying
 
 
 

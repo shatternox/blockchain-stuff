@@ -13,6 +13,7 @@ const { interface, bytecode } = require('../compile');
 
 let accounts;
 let inbox;
+const INITIAL_STRING = 'Hi There!';
 
 beforeEach(async () => {
     // Get a list of all accounts
@@ -23,7 +24,7 @@ beforeEach(async () => {
     inbox = await new web3.eth.Contract(JSON.parse(interface))
     .deploy({ // Tells web3 that we want to deploy a new copy of this contract
         data: bytecode,
-        arguments: ['Hi There!'],
+        arguments: [INITIAL_STRING],
     }).send({ // Instructs web3 to send out a transaction to create the contract
         from: accounts[0], // ini account yang akan deploy accountnya
         gas: '1000000',
@@ -33,7 +34,23 @@ beforeEach(async () => {
 describe('Inbox', () => {
     it('deploys a contract', () => {
         // console.log(accounts);
-        console.log(inbox);
+        // console.log(inbox); // inbox represents instance contractnya
+
+        assert.ok(inbox.options.address); // assert.ok memastikan addressnya exists, kalo null nanti fail
+    });
+
+    it('has a default message', async () => {
+        // inget .message() pas kita pake remix, ini variable public yang kyk getMessage() fungsinya, baca catetan lagi
+        const message = await inbox.methods.message().call();
+        assert.equal(message, INITIAL_STRING);
+    });
+
+    it('can change the message', async () => {
+        // inget! ngubah data dalam contract harus pake send! pake transaction, pake duit
+        await inbox.methods.setMessage("bye").send({ from: accounts[0] });
+        const message = await inbox.methods.message().call();
+        assert.equal(message, 'bye');
+
     });
 });
 

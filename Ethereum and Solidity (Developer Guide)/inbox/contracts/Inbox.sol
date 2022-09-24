@@ -11,4 +11,6 @@ contract Inbox {
         message = newMessage;
     }
 
+    
+
 }
