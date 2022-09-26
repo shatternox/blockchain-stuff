@@ -105,6 +105,57 @@ contract Inbox {
 - Kita testingnya pake Mocha
 
 
+## Data types (beneran kyk C anjay)
+- string
+- bool
+- int (has no decimal) == int256
+    - int8     -128 >> 127
+    - int16    -32769 >> 32767
+    - int32    -2147483648 >> 2147483648
+    ...
+    - int256   really, really negative >> really, really big
+
+- uint (unsight int, only positive numbers, jadinya rangenya lebih besar)
+    - uint8     0 >> 255
+    - uint16    0 >> 65535
+    - uint32    0 >> 4294967295
+    ...
+    - uint256   0 >> really, really big
+
+### NOTE: KITA ITU BAYAR BUAT STORAGENYA, JADI BETTER KALO EMNG KECIL SIZENYA SPECIFY UKURAN YANG PAS AJA BUAT VARIABLENYA. TAPIII KECIL SIH..
+
+- fixed/ufixed (fixed point number, punya decimal)
+- address (has methods tied to it for sending money) >> Buat nyimpen address
+
+..ngeliat intnya mungkin ini makannya solidity rentan terhadap integeroverflow
+
+
+### NOTE: BIASANYA KALO DEVELOP CONTRACT, KITA GK TARO OPERASI MATEMATIKA KOMPLEKS DI DALAM CONTRACTNYA, KARENA INGAT! SETIAP OPERASI MATEMATIKA ITU BAYAR. PALINGAN SIMPLE DOANG.
+
+
+Kalo public variable kan bakal kebikin function untuk get isinya (getMessage kemaren).
+Tapi kalo variablenya array, kita harus passing 1 argument buat get isi index ke index keberapanya.
+
+
+## Data type array
+- fixed array >> kyk C, kita specify arraylengthnya dan isinya harus sesuai uint[100]
+- dynamic array >> Kyk C juga, tapi gk ush specify arraylengthnya, ntar dia nyesuain uint[]
+- mapping >> kyk dictionary python. TAPII SEMUA KEYNYA HARUS 1 TIPE DATA, DAN SEMUA VALUENYA HARUS 1 TIPEDATA JUGA
+    - dipake buat define many things
+- struct >> kyk C, bisa beda tipe data
+    - dipake buat define singular things
+    struct Car{
+        string make;
+        string model;
+        uint value;
+    }
+    Car.make, Car.model, Car.value
+
+Jadi pasti ntar akan sering ketemu, struct inside of mapping.
+
+- STRING ITU DI SOLIDTY ADALAH DYNAMIC ARRAY (STRINGS OF CHARACTERS KYK C)
+
+
 npm init
 
 npm install solc@0.4.17 // npm i solc kalo gk bisa
@@ -116,6 +167,7 @@ npm install mocha ganache-cli web3
 npm install @truffle/hdwallet-provider
 
 
+npm install solc@0.8.9 web3 mocha ganache-cli @truffle/hdwallet-provider
 
 npm run test >> For testing 
 
@@ -123,7 +175,27 @@ node deploy.js >> For deploying
 
 
 
+```c++
+pragma solidity ^0.4.17;
 
+contract Lottery{
+    address public manager;
+    address[] public players;
+
+    function Lottery() public{
+        // Langsung dapet address dari yang ngejalanin functionnya
+        manager = msg.sender;
+    }
+
+    function enter() public payable{
+        // require ini buat validasi, kalo false, ntar seluruh funcitonnya exit.
+        // msg.value, ngambil nilai gas yang dikirim along with the transaction
+        // .01 ether nanti akan diconvert ke wei karena kalo pake wei ntar gk kebaca, 0nya kebanyakan
+        require(msg.value > .01 ether);
+        players.push(msg.sender);
+    }
+}
+```
 
 
 
