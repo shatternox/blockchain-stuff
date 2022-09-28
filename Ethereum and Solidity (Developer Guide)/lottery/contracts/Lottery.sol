@@ -20,7 +20,7 @@ contract Lottery{
     // ini randomnya pseudo-random, randomnya bisa ditebak karena isinya user tau semua
     function random() private view returns (uint){
         // uint convert jadi uint
-        return uint(sha3(block.difficulty, now, players));
+        return uint(keccak256(block.difficulty, now, players));
 
     }
 
