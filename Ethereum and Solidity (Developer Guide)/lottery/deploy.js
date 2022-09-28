@@ -4,7 +4,9 @@
  https://goerli.infura.io/v3/a6f3a6efb1f44ba399ca1d087dc7e5bb
 
  https://goerli.etherscan.io/
- 0x0E25a486B17de8d1502541b0fE689c8f9Cc7B9Ab
+Interface: [{"constant":true,"inputs":[],"name":"manager","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"pickWinner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getPlayers","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"enter","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"players","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}]
+
+Address: 0x2F7c37BC677DeAbF9E2D078c8C4D701b39d01c52
 ******************************************************************/
 
 
@@ -35,6 +37,7 @@ const deploy = async() => {
             from: accounts[0],
         });
 
+    console.log(interface);
     console.log('Contract deployed to ', result.options.address);
 
     // To prevent hanging deployment
